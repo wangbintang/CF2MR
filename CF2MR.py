@@ -182,3 +182,7 @@ for i in range(len(part)):
     for j in range(len(part)):
         mr[i][j] = massratio[j]/massratio[i]
     print(" : ".join(str(i) for i in part) + ' = ' + " : ".join(str(i) for i in mr[i]))
+
+import msvcrt
+print('按任意键结束')
+msvcrt.getwche()

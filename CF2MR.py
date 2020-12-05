@@ -165,8 +165,8 @@ ratio = solve(A, b)
 massratio = [0]*len(part)
 partmass = [0]*len(part)
 for i in range(len(part)):
-    massratio[i] = molmass(part[i])
-    partmass[i] = ratio[i]*massratio[i]*totalmass/molmass(target)
+    massratio[i] = ratio[i]*molmass(part[i])
+    partmass[i] = massratio[i]*totalmass/molmass(target)
 ratioprint = [0]*len(part)
 for i in range(len(part)):
     ratioprint[i] = str(ratio[i]) + ' ' + part[i]

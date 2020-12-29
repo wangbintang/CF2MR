@@ -1,4 +1,4 @@
-import re
+﻿import re
 import numpy as np
 periodic_table = {'H': 1.008,
  'He': 4.0026,
@@ -155,33 +155,50 @@ def molmass(cf):
     for i in range(len(el)):
         molmass += periodic_table[el[i]] * ar[i]
     return molmass
+
 target = input('整点儿____\n')
 part = input('用____整儿(除字母数字小数点外均可用作分隔符)\n')
 part = re.findall('[A-Z][A-Za-z\d\.]*', part)
-totalmass = input('整儿____克(g)\n')
-totalmass = float(totalmass)
+
 A, b = prepare(target, part)
 ratio = solve(A, b)
 massratio = [0]*len(part)
 partmass = [0]*len(part)
 for i in range(len(part)):
     massratio[i] = ratio[i]*molmass(part[i])
-    partmass[i] = massratio[i]*totalmass/molmass(target)
 ratioprint = [0]*len(part)
+massratioprint = [0]*len(part)
 for i in range(len(part)):
     ratioprint[i] = str(ratio[i]) + ' ' + part[i]
+    massratioprint[i] = str(massratio[i]) + 'g ' + part[i]
 print(" + ".join(str(i) for i in ratioprint) + ' = ' + target)
-massprint = [0]*len(part)
-for i in range(len(part)):
-    massprint[i] = str(partmass[i])+'g '+ part[i]
-print(" + ".join(str(i) for i in massprint) + ' = ' + str(totalmass) + 'g ' + target)
+print(" + ".join(str(i) for i in massratioprint) + ' = ' + str(molmass(target)) + 'g ' + target)
 print('质量比为')
 mr = [0]*len(part)
 for i in range(len(part)):
     mr[i] = [0]*len(part)
     for j in range(len(part)):
         mr[i][j] = massratio[j]/massratio[i]
-    print(" : ".join(str(i) for i in part) + ' = ' + " : ".join(str(i) for i in mr[i]))
+    print(" : ".join(str(j) for j in part) + ' = ' + " : ".join(str(j) for j in mr[i]))
+
+totalmass = input('整儿____克(g)\n')
+totalmass = float(totalmass)
+
+partmass = [0]*len(part)
+for i in range(len(part)):
+    partmass[i] = massratio[i]*totalmass/molmass(target)
+massprint = [0]*len(part)
+for i in range(len(part)):
+    massprint[i] = str(partmass[i])+'g '+ part[i]
+print(" + ".join(str(i) for i in massprint) + ' = ' + str(totalmass) + 'g ' + target)
+
+totalmol = input('整儿____摩尔(mol)\n')
+totalmol = float(totalmol)
+
+molprint = [0]*len(part)
+for i in range(len(part)):
+    molprint[i] = str(totalmol*massratio[i])+'g '+ part[i]
+print(" + ".join(str(i) for i in molprint) + ' = ' + str(totalmol*molmass(target)) + 'g ' + target)
 
 import msvcrt
 print('按任意键结束')
